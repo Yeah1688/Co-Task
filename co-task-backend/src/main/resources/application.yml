@@ -1,0 +1,29 @@
+﻿server:
+  port: 5000
+
+jwt:
+  secret: co-tosk-jwt-secret-key-must-be-at-least-256-bits-long-for-hmac-sha-algorithm
+  access-token-validity-ms: 86400000
+
+spring:
+  datasource:
+    # localhost:5432
+    url: jdbc:postgresql://localhost:5432/cotask_db
+    # PostgreSQL
+    username: 数据库用户名
+    password: 数据库密码
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+ai:
+  api:
+    key: ${DOUBAO_API_KEY:你的豆包API密钥}
+    url: https://ark.cn-beijing.volces.com/api/v3/chat/completions
+    model: doubao-seed-character-251128

@@ -1,0 +1,42 @@
+# =============================================================================
+# Co-Task AI 测试环境配置
+# 使用 H2 内存数据库替代 PostgreSQL，JPA 自动建表
+# =============================================================================
+spring:
+  datasource:
+    url: jdbc:h2:mem:cotask_test;MODE=PostgreSQL;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop  # 每次测试运行后清理数据库
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
+
+  # 禁用 WebSocket 自动配置（Service 测试不需要）
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.websocket.servlet.WebSocketServletAutoConfiguration
+
+# JWT 测试密钥
+jwt:
+  secret: test-secret-key-for-co-tosk-must-be-at-least-256-bits-long-for-hmac-sha
+  access-token-validity-ms: 3600000  # 1 小时
+
+# AI API 测试配置
+ai:
+  api:
+    key: test-api-key
+    url: https://api.openai.com/v1/chat/completions
+
+# 日志级别
+logging:
+  level:
+    root: WARN
+    com.cotask: DEBUG
+    org.springframework.test: INFO
